@@ -20,28 +20,48 @@ jxRequirements:
     enabled: false
     schedule: ""
   cluster:
+    azure:
+      dns:
+        resourceGroup: jeninsxdns
+        subscriptionId: c63f111b-688e-433a-a7bc-ab5740cef199
+        tenantId: 2b916926-51b6-4a95-8003-bd3525f83077
+      secretStorage:
+        keyVaultName: jenkinsxKV
+      storage:
+        storageAccountName: jxjenkinsx
+    chartRepository: http://jenkins-x-chartmuseum.jx.svc.cluster.local:8080
+    environmentGitOwner: xqianwang
     gitKind: github
     gitName: github
     gitServer: https://github.com
     provider: aks
+    registry: zafindevregistry.azurecr.io
   environments:
   - key: dev
+    owner: xqianwang
+    repository: jenkinsx-sample-azure
   - key: staging
   - key: production
   ingress:
-    domain: change.me
+    domain: dev.zafin-jenkins-x.com
+    externalDNS: true
     kind: ingress
     namespaceSubDomain: -secret-infra.
     tls:
       email: ""
       enabled: false
       production: false
+  pipelineUser:
+    username: xqianwang
   repository: nexus
-  secretStorage: vault
+  secretStorage: azurekeyvault
+  storage:
+  - name: logs
+    url: azblob://logs
   vault: {}
   webhook: lighthouse
 jxRequirementsIngressExternalDNS:
-  enabled: false
+  enabled: true
 jxRequirementsIngressTLS:
   enabled: false
 jxRequirementsKuberhealthy:
@@ -49,4 +69,4 @@ jxRequirementsKuberhealthy:
 jxRequirementsTLSCheck:
   enabled: false
 jxRequirementsVault:
-  enabled: true
+  enabled: false
